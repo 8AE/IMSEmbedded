@@ -2,8 +2,8 @@
 #include "IMS.h"
 #include "Button.h"
 
-const uint8_t pinstartButton = 2;
-const uint8_t pinprofileSelectButton = 3;
+const uint8_t pinstartButton = 8;
+const uint8_t pinprofileSelectButton = 7;
 const uint8_t pinLed1 = 4;
 const uint8_t pinLed2 = 5;
 
@@ -16,17 +16,24 @@ void setup()
   pinMode(pinLed1, OUTPUT);
   pinMode(pinLed2, OUTPUT);
 
-  startButton.debounceMs = 500;
+  startButton.debounceMs = 1000;
   profileSelectButton.debounceMs = 500;
+
+  Serial.begin(9600); //DEBUG
 }
 
 void loop(void)
 {
   uint16_t now = millis();
-  ImsDevice.Start();
+
   startButton.poll(now);
   profileSelectButton.poll(now);
 
-  startButton.wasPressed() ? digitalWrite(pinLed1, HIGH) : digitalWrite(pinLed1, LOW);
+  if (!startButton.getState())
+  {
+    ImsDevice.Start();
+    Serial.println("Main Start Button has been started");
+  }
+
   profileSelectButton.wasPressed() ? digitalWrite(pinLed2, HIGH) : digitalWrite(pinLed2, LOW);
 }
