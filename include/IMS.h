@@ -14,14 +14,14 @@ class IMS
 protected:
     boolean _state; //state of IMS machine
     uint8_t _currentProfileIndex;
-    uint8_t _maxNumberOfProfiles;
-    Profile profileArray[];
+    Profile profileArray[4] = {};
 
 public:
-    IMS(void);
+    IMS(uint8_t numberOfProfiles);
     void Start();
     void Stop();
-    void SelectProfile();
+    void SelectProfile(uint8_t index);
+    uint8_t GetNextProfile();
     uint8_t GetCurrentProfileIndex() { return _currentProfileIndex; }
     boolean GetState() { return _state; }
 };

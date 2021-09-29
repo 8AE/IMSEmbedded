@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <ezButton.h>
 #include "IMS.h"
 #include "Button.h"
 
@@ -6,18 +7,20 @@ const uint8_t pinstartButton = 8;
 const uint8_t pinprofileSelectButton = 7;
 const uint8_t pinLed1 = 4;
 const uint8_t pinLed2 = 5;
+uint8_t profileIndex;
 
-Button startButton(pinstartButton);
-Button profileSelectButton(pinprofileSelectButton);
-IMS ImsDevice;
+ezButton startButton(pinstartButton);
+ezButton profileSelectButton(pinprofileSelectButton);
+IMS ImsDevice(4);
 
 void setup()
 {
   pinMode(pinLed1, OUTPUT);
   pinMode(pinLed2, OUTPUT);
 
-  startButton.debounceMs = 1000;
-  profileSelectButton.debounceMs = 500;
+  startButton.setDebounceTime(1000);
+  profileSelectButton.setDebounceTime(1000);
+  profileIndex = ImsDevice.GetCurrentProfileIndex();
 
   Serial.begin(9600); //DEBUG
 }
@@ -26,14 +29,21 @@ void loop(void)
 {
   uint16_t now = millis();
 
-  startButton.poll(now);
-  profileSelectButton.poll(now);
+  startButton.loop();
+  profileSelectButton.loop();
 
-  if (!startButton.getState())
+  if (startButton.isPressed())
   {
     ImsDevice.Start();
     Serial.println("Main Start Button has been started");
   }
 
-  profileSelectButton.wasPressed() ? digitalWrite(pinLed2, HIGH) : digitalWrite(pinLed2, LOW);
+  if (profileSelectButton.isPressed())
+  {
+    profileIndex = ImsDevice.GetNextProfile();
+
+    Serial.println(profileIndex);
+  }
+
+  //profileSelectButton.wasPressed() ? digitalWrite(pinLed2, HIGH) : digitalWrite(pinLed2, LOW);
 }
