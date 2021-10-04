@@ -9,6 +9,7 @@
 IMS::IMS(uint8_t numberOfProfiles)
 {
     _currentProfileIndex = 0;
+    _state = false;
     Serial.println("IMS has been made"); //DEBUG
 }
 
@@ -21,6 +22,12 @@ IMS::IMS(uint8_t numberOfProfiles)
 void IMS::Start(void)
 {
     Serial.println("IMS Start"); //DEBUG
+    _state = true;
+    /*
+    * configure all pins
+    * start timer
+    * start channel
+    */
 }
 
 /**
@@ -29,6 +36,12 @@ void IMS::Start(void)
 void IMS::Stop(void)
 {
     Serial.println("IMS Stop"); //DEBUG
+    _state = false;
+    /*
+    * configure all pins
+    * start timer
+    * start channel
+    */
 }
 
 /**

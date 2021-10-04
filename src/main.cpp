@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <ezButton.h>
+#include <EEPROM.h>
 #include "IMS.h"
 #include "Button.h"
 
@@ -27,8 +28,6 @@ void setup()
 
 void loop(void)
 {
-  uint16_t now = millis();
-
   startButton.loop();
   profileSelectButton.loop();
 
@@ -44,6 +43,4 @@ void loop(void)
 
     Serial.println(profileIndex);
   }
-
-  //profileSelectButton.wasPressed() ? digitalWrite(pinLed2, HIGH) : digitalWrite(pinLed2, LOW);
 }
