@@ -16,17 +16,31 @@
 
 using namespace std;
 
+enum
+{
+    VastusLateralis = 1,
+    VastusMedialis,
+    Quadricep,
+    Gacilis,
+    Hamstring,
+    Calves
+};
+
 class IMS
 {
 protected:
     boolean _state; //state of IMS machine
     uint8_t _currentProfileIndex;
-    // incPin,  udPin,  csPin
+
     DigiPot *amplitudeKnob;
     DigiPot *fineAdjustmentKnob;
     DigiPot *coarseKnob;
 
-    Profile profileArray[4] = {};
+    const uint8_t *channelRelayPins;
+    Profile *profileArray;
+
+    void SetRelayFromMuscleIndex(uint8_t muscleIndex);
+    void DisableRelay();
 
 public:
     IMS(uint8_t numberOfProfiles);

@@ -11,9 +11,8 @@
 
 #include <Arduino.h>
 #include <ezButton.h>
-#include <EEPROM.h>
+//#include <EEPROM.h>
 #include "IMS.h"
-#include "Button.h"
 #include "Led.h"
 
 const uint8_t pinstartButton = 73;
@@ -42,8 +41,16 @@ void loop(void)
 
   if (startButton.isPressed())
   {
-    ImsDevice.Start();
-    Serial.println("Main Start Button has been started");
+    if (ImsDevice.GetState())
+    {
+      ImsDevice.Stop();
+      Serial.println("Main Stop Button has been stopped");
+    }
+    else
+    {
+      ImsDevice.Start();
+      Serial.println("Main Start Button has been started");
+    }
   }
 
   if (profileSelectButton.isPressed())
