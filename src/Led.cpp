@@ -6,6 +6,11 @@
 #include <Arduino.h>
 #include "Led.h"
 
+/**
+ * @brief Construct a new Led:: Led object
+ * 
+ * @param pin 
+ */
 Led::Led(uint8_t pin)
 {
     _pin = pin;
@@ -15,24 +20,41 @@ Led::Led(uint8_t pin)
     digitalWrite(pin, state); //Off initial state
 }
 
+/**
+ * @brief 
+ * 
+ */
 void Led::TurnOff()
 {
     state = false;
     digitalWrite(_pin, state); //Off initial state
 }
 
+/**
+ * @brief 
+ * 
+ */
 void Led::TurnOn()
 {
     state = true;
     digitalWrite(_pin, state); //Off initial state
 }
 
+/**
+ * @brief 
+ * 
+ * @param newState 
+ */
 void Led::WriteState(bool newState)
 {
     state = newState;
     digitalWrite(_pin, state);
 }
 
+/**
+ * @brief 
+ * 
+ */
 void Led::ToggleState()
 {
     state = !state;

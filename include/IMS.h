@@ -4,6 +4,7 @@
 */
 
 #include <Arduino.h>
+#include <DigiPotX9Cxxx.h>
 #include "Profile.h"
 #pragma once
 
@@ -14,6 +15,11 @@ class IMS
 protected:
     boolean _state; //state of IMS machine
     uint8_t _currentProfileIndex;
+    // incPin,  udPin,  csPin
+    DigiPot *amplitudeKnob;
+    DigiPot *fineAdjustmentKnob;
+    DigiPot *coarseKnob;
+
     Profile profileArray[4] = {};
 
 public:

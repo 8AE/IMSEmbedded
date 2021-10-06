@@ -4,58 +4,72 @@
 */
 
 #include <Arduino.h>
+
 #include "IMS.h"
 
+/**
+ * @brief Construct a new IMS::IMS object
+ * 
+ * @param numberOfProfiles 
+ */
 IMS::IMS(uint8_t numberOfProfiles)
 {
     _currentProfileIndex = 0;
     _state = false;
+
+    amplitudeKnob = new DigiPot(18, 23, 24);
+    fineAdjustmentKnob = new DigiPot(5, 15, 16);
+    coarseKnob = new DigiPot(6, 7, 1);
+
     Serial.println("IMS has been made"); //DEBUG
 }
 
 /**
-* start everything
-* this is where we adjust all the potentiometers
-* set thevalues
-* and start
-*/
+ * @brief Start
+ * 
+ */
 void IMS::Start(void)
 {
     Serial.println("IMS Start"); //DEBUG
     _state = true;
-    /*
-    * configure all pins
-    * start timer
-    * start channel
-    */
+
+    amplitudeKnob->set(1);
+    coarseKnob->set(1);
+    fineAdjustmentKnob->set(1);
+    //start timer
 }
 
 /**
-* Stop the IMS Device
-*/
+ * @brief 
+ * 
+ */
 void IMS::Stop(void)
 {
     Serial.println("IMS Stop"); //DEBUG
     _state = false;
-    /*
-    * configure all pins
-    * start timer
-    * start channel
-    */
+
+    amplitudeKnob->reset();
+    coarseKnob->reset();
+    fineAdjustmentKnob->reset();
+
+    //stop timer
 }
 
 /**
-* Select profile from specific index
-*/
+ * @brief 
+ * 
+ * @param index 
+ */
 void IMS::SelectProfile(uint8_t index)
 {
     _currentProfileIndex = index;
 }
 
 /**
-* Gets ands sets the next profile index
-* Loops after 3
-*/
+ * @brief 
+ * 
+ * @return uint8_t 
+ */
 uint8_t IMS::GetNextProfile()
 {
     if (_currentProfileIndex > 3)
