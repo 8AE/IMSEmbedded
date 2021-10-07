@@ -43,6 +43,10 @@ IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
     Serial.println("IMS has been made"); //DEBUG
 }
 
+void among()
+{
+}
+
 /**
  * @brief Start
  * 
@@ -61,10 +65,6 @@ void IMS::Start(void)
     _muscleTimer->setInterval(profileArray[_currentProfileIndex].GetTime());
     _muscleTimer->setOnTimer(&among);
     _muscleTimer->Start();
-}
-
-void among()
-{
 }
 
 /**
