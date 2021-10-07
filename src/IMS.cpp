@@ -28,7 +28,13 @@ IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
     fineAdjustmentKnob = new DigiPot(5, 15, 16);
     coarseKnob = new DigiPot(6, 7, 1);
 
-    profileArray = new Profile[numberOfProfiles];
+    Profile exampleProfiles[] = {
+        {1, 0, 0, 0, 0, 0},
+        {2, 0, 0, 0, 0, 0},
+        {3, 0, 0, 0, 0, 0},
+        {4, 0, 0, 0, 0, 0}};
+    profileArray = exampleProfiles;
+
     channelRelayPins = baseRelayPins;
 
     for (uint8_t i = 0; i < 16; i++)
@@ -40,7 +46,7 @@ IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
     _muscleTimer = muscleTimer;
     _muscleTimer->setSingleShot(true);
 
-    Serial.println("IMS has been made"); //DEBUG
+    Serial.println("Hello Ims ready"); //DEBUG
 }
 
 void among()

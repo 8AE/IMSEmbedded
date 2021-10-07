@@ -26,6 +26,7 @@ private:
 
 public:
     Profile(void);
+    Profile(uint8_t _numberOfChannels, uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time);
     uint16_t GetTime() { return time; }
     uint8_t GetFineSetting() { return fineSetting; }
     uint8_t GetAmplitudeSetting() { return amplitudeSetting; }

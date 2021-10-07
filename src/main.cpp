@@ -24,16 +24,18 @@ ezButton startButton(pinstartButton);
 ezButton profileSelectButton(pinprofileSelectButton);
 Led profileLeds[] = {59, 57, 55, 53};
 TimerObject *muscleTimer = new TimerObject(10000); //will call the callback in the interval of 1000 ms
-IMS ImsDevice(4, muscleTimer);
+IMS *ImsDevice;
 
 void setup()
 {
+  Serial.begin(9600); //DEBUG
+
+  ImsDevice = new IMS(4, muscleTimer);
   startButton.setDebounceTime(1000);
   profileSelectButton.setDebounceTime(1000);
-  profileIndex = ImsDevice.GetCurrentProfileIndex();
+  profileIndex = ImsDevice->GetCurrentProfileIndex();
   profileLeds[profileIndex].TurnOn();
-
-  Serial.begin(9600); //DEBUG
+  Serial.println(profileIndex);
 }
 
 void loop(void)
@@ -44,14 +46,14 @@ void loop(void)
 
   if (startButton.isPressed())
   {
-    if (ImsDevice.GetState())
+    if (ImsDevice->GetState())
     {
-      ImsDevice.Stop();
+      ImsDevice->Stop();
       Serial.println("Main Stop Button has been stopped");
     }
     else
     {
-      ImsDevice.Start();
+      ImsDevice->Start();
       Serial.println("Main Start Button has been started");
     }
   }
@@ -60,7 +62,7 @@ void loop(void)
   {
     profileLeds[profileIndex].TurnOff();
 
-    profileIndex = ImsDevice.GetNextProfile();
+    profileIndex = ImsDevice->GetNextProfile();
     profileLeds[profileIndex].TurnOn();
 
     Serial.println(profileIndex);
