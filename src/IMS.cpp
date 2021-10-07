@@ -17,7 +17,7 @@
  * 
  * @param numberOfProfiles 
  */
-IMS::IMS(uint8_t numberOfProfiles)
+IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
 {
     const uint8_t baseRelayPins[16] = {50, 52, 42, 40, 38, 36, 22, 20, 19, 21, 35, 37, 39, 41, 51, 70};
     _currentProfileIndex = 0;
@@ -37,6 +37,9 @@ IMS::IMS(uint8_t numberOfProfiles)
         digitalWrite(channelRelayPins[i], LOW); // set initial state OFF for high trigger relay
     }
 
+    _muscleTimer = muscleTimer;
+    _muscleTimer->setSingleShot(true);
+
     Serial.println("IMS has been made"); //DEBUG
 }
 
@@ -55,6 +58,13 @@ void IMS::Start(void)
 
     SetRelayFromMuscleIndex(profileArray[_currentProfileIndex].GetMuscleIndex());
     //start timer
+    _muscleTimer->setInterval(profileArray[_currentProfileIndex].GetTime());
+    _muscleTimer->setOnTimer(&among);
+    _muscleTimer->Start();
+}
+
+void among()
+{
 }
 
 /**

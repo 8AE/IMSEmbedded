@@ -12,6 +12,8 @@
 #include <Arduino.h>
 #include <DigiPotX9Cxxx.h>
 #include "Profile.h"
+#include "TimerObject.h"
+
 #pragma once
 
 using namespace std;
@@ -28,9 +30,10 @@ enum
 
 class IMS
 {
-protected:
+private:
     boolean _state; //state of IMS machine
     uint8_t _currentProfileIndex;
+    TimerObject *_muscleTimer;
 
     DigiPot *amplitudeKnob;
     DigiPot *fineAdjustmentKnob;
@@ -43,7 +46,7 @@ protected:
     void DisableRelay();
 
 public:
-    IMS(uint8_t numberOfProfiles);
+    IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer);
     void Start();
     void Stop();
     void SelectProfile(uint8_t index);
