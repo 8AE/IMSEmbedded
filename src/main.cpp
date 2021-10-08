@@ -14,7 +14,6 @@
 //#include <EEPROM.h>
 #include "IMS.h"
 #include "Led.h"
-#include "TimerObject.h"
 
 const uint8_t pinstartButton = 73;
 const uint8_t pinprofileSelectButton = 71;
@@ -23,14 +22,13 @@ uint8_t profileIndex;
 ezButton startButton(pinstartButton);
 ezButton profileSelectButton(pinprofileSelectButton);
 Led profileLeds[] = {59, 57, 55, 53};
-TimerObject *muscleTimer = new TimerObject(10000); //will call the callback in the interval of 1000 ms
 IMS *ImsDevice;
 
 void setup()
 {
   Serial.begin(9600); //DEBUG
 
-  ImsDevice = new IMS(4, muscleTimer);
+  ImsDevice = new IMS(4);
   startButton.setDebounceTime(1000);
   profileSelectButton.setDebounceTime(1000);
   profileIndex = ImsDevice->GetCurrentProfileIndex();
@@ -40,7 +38,6 @@ void setup()
 
 void loop(void)
 {
-  muscleTimer->Update();
   startButton.loop();
   profileSelectButton.loop();
 

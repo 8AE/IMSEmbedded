@@ -11,16 +11,18 @@
 
 #include <Arduino.h>
 #include "IMS.h"
+#include "TreatmentProfile.h"
 
 /**
  * @brief Construct a new IMS::IMS object
  * 
  * @param numberOfProfiles 
  */
-IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
+IMS::IMS(uint8_t numberOfProfiles)
 {
+    _maxNumberOfTreatmentProfiles = numberOfProfiles;
     const uint8_t baseRelayPins[16] = {50, 52, 42, 40, 38, 36, 22, 20, 19, 21, 35, 37, 39, 41, 51, 70};
-    _currentProfileIndex = 0;
+    _currentTreatmentProfileIndex = 0;
     _state = false;
 
     // incPin,  udPin,  csPin
@@ -28,12 +30,8 @@ IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
     fineAdjustmentKnob = new DigiPot(5, 15, 16);
     coarseKnob = new DigiPot(6, 7, 1);
 
-    Profile exampleProfiles[] = {
-        {1, 0, 0, 0, 0, 0},
-        {2, 0, 0, 0, 0, 0},
-        {3, 0, 0, 0, 0, 0},
-        {4, 0, 0, 0, 0, 0}};
-    profileArray = exampleProfiles;
+    TreatmentProfile exampleProfiles[4] = {};
+    treatmentProfileArray = exampleProfiles;
 
     channelRelayPins = baseRelayPins;
 
@@ -43,14 +41,7 @@ IMS::IMS(uint8_t numberOfProfiles, TimerObject *muscleTimer)
         digitalWrite(channelRelayPins[i], LOW); // set initial state OFF for high trigger relay
     }
 
-    _muscleTimer = muscleTimer;
-    _muscleTimer->setSingleShot(true);
-
     Serial.println("Hello Ims ready"); //DEBUG
-}
-
-void among()
-{
 }
 
 /**
@@ -62,15 +53,11 @@ void IMS::Start(void)
     Serial.println("IMS Start"); //DEBUG
     _state = true;
 
-    amplitudeKnob->set(profileArray[_currentProfileIndex].GetAmplitudeSetting());
-    coarseKnob->set(profileArray[_currentProfileIndex].GetCoarseSetting());
-    fineAdjustmentKnob->set(profileArray[_currentProfileIndex].GetFineSetting());
+    amplitudeKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetAmplitudeSetting());
+    coarseKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetCoarseSetting());
+    fineAdjustmentKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetFineSetting());
 
-    SetRelayFromMuscleIndex(profileArray[_currentProfileIndex].GetMuscleIndex());
-    //start timer
-    _muscleTimer->setInterval(profileArray[_currentProfileIndex].GetTime());
-    _muscleTimer->setOnTimer(&among);
-    _muscleTimer->Start();
+    SetRelayFromMuscleIndex(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetMuscleIndex());
 }
 
 /**
@@ -96,7 +83,7 @@ void IMS::Stop(void)
  */
 void IMS::SelectProfile(uint8_t index)
 {
-    _currentProfileIndex = index;
+    _currentTreatmentProfileIndex = index;
 }
 
 /**
@@ -106,15 +93,15 @@ void IMS::SelectProfile(uint8_t index)
  */
 uint8_t IMS::GetNextProfile()
 {
-    if (_currentProfileIndex > 3)
+    if (_currentTreatmentProfileIndex > _maxNumberOfTreatmentProfiles - 1)
     {
-        _currentProfileIndex = 0;
+        _currentTreatmentProfileIndex = 0;
     }
     else
     {
-        _currentProfileIndex++;
+        _currentTreatmentProfileIndex++;
     }
-    return _currentProfileIndex;
+    return _currentTreatmentProfileIndex;
 }
 
 void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
