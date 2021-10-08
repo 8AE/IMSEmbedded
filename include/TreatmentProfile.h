@@ -24,7 +24,7 @@ private:
 
 public:
     TreatmentProfile(void);
-    Profile GetNextProfile();
+    uint8_t GetNextProfile();
     Profile GetCurrentProfile();
     Profile GetProfile(uint8_t index);
     uint8_t GetCurrentProfileIndex() { return _currentProfileIndex; }

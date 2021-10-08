@@ -13,6 +13,7 @@
 #include <DigiPotX9Cxxx.h>
 #include "Profile.h"
 #include "TreatmentProfile.h"
+#include "timer.h"
 
 #pragma once
 
@@ -44,9 +45,12 @@ private:
 
     void SetRelayFromMuscleIndex(uint8_t muscleIndex);
     void DisableRelay();
+    TimerForMethods<IMS> *timer;
 
 public:
     IMS(uint8_t numberOfProfiles);
+    void StartNextMuscle();
+    void SetTimerPointer(TimerForMethods<IMS> *timerPointer);
     void Start();
     void Stop();
     void SelectProfile(uint8_t index);

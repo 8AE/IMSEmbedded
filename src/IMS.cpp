@@ -12,6 +12,7 @@
 #include <Arduino.h>
 #include "IMS.h"
 #include "TreatmentProfile.h"
+#include "timer.h"
 
 /**
  * @brief Construct a new IMS::IMS object
@@ -40,8 +41,23 @@ IMS::IMS(uint8_t numberOfProfiles)
         pinMode(channelRelayPins[i], OUTPUT);   // set pin as output
         digitalWrite(channelRelayPins[i], LOW); // set initial state OFF for high trigger relay
     }
+}
 
-    Serial.println("Hello Ims ready"); //DEBUG
+void IMS::StartNextMuscle()
+{
+    if (treatmentProfileArray[_currentTreatmentProfileIndex].GetNextProfile() == 0) //this means we looped back and ended
+    {
+        Stop();
+    }
+    else
+    {
+        Start();
+    }
+}
+
+void IMS::SetTimerPointer(TimerForMethods<IMS> *timerPointer)
+{
+    timer = timerPointer;
 }
 
 /**
@@ -58,6 +74,8 @@ void IMS::Start(void)
     fineAdjustmentKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetFineSetting());
 
     SetRelayFromMuscleIndex(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetMuscleIndex());
+    timer->setTimeout(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetTime() * 1000);
+    timer->start();
 }
 
 /**
@@ -72,8 +90,8 @@ void IMS::Stop(void)
     amplitudeKnob->reset();
     coarseKnob->reset();
     fineAdjustmentKnob->reset();
-
-    //stop timer
+    DisableRelay();
+    timer->stop();
 }
 
 /**

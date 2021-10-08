@@ -23,7 +23,7 @@ TreatmentProfile::TreatmentProfile()
     profileArray = exampleProfiles; //ALSO TEMP THIS IS FROM EEPROM ALSO
 }
 
-Profile TreatmentProfile::GetNextProfile()
+uint8_t TreatmentProfile::GetNextProfile()
 {
     if (_currentProfileIndex > _maxNumberOfProfiles)
     {
@@ -33,7 +33,7 @@ Profile TreatmentProfile::GetNextProfile()
     {
         _currentProfileIndex++;
     }
-    return profileArray[_currentProfileIndex];
+    return _currentProfileIndex;
 }
 
 Profile TreatmentProfile::GetCurrentProfile()
