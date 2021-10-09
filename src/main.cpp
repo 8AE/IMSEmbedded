@@ -37,6 +37,8 @@ void setup()
   profileIndex = ImsDevice.GetCurrentProfileIndex();
   profileLeds[profileIndex].TurnOn();
   Serial.println(profileIndex);
+
+  Serial.println("Class is alive");
 }
 
 void loop(void)
