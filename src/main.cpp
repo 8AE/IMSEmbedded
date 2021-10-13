@@ -16,13 +16,13 @@
 #include "Led.h"
 #include "timer.h"
 
-const uint8_t pinstartButton = 73;
-const uint8_t pinprofileSelectButton = 71;
+const uint8_t pinstartButton = 27;
+const uint8_t pinprofileSelectButton = 29;
 uint8_t profileIndex;
 
 ezButton startButton(pinstartButton);
 ezButton profileSelectButton(pinprofileSelectButton);
-Led profileLeds[] = {59, 57, 55, 53};
+Led profileLeds[] = {31, 33, 35, 37};
 IMS ImsDevice(4);
 TimerForMethods<IMS> *timer;
 
