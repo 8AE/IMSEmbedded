@@ -22,14 +22,14 @@
 IMS::IMS(uint8_t numberOfProfiles)
 {
     _maxNumberOfTreatmentProfiles = numberOfProfiles;
-    const uint8_t baseRelayPins[16] = {50, 52, 42, 40, 38, 36, 22, 20, 19, 21, 35, 37, 39, 41, 51, 70};
+    const uint8_t baseRelayPins[16] = {38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
     _currentTreatmentProfileIndex = 0;
     _state = false;
 
     // incPin,  udPin,  csPin
-    amplitudeKnob = new DigiPot(18, 23, 24);
-    fineAdjustmentKnob = new DigiPot(5, 15, 16);
-    coarseKnob = new DigiPot(6, 7, 1);
+    amplitudeKnob = new DigiPot(9, 10, 11);
+    fineAdjustmentKnob = new DigiPot(5, 6, 7);
+    coarseKnob = new DigiPot(2, 3, 4);
 
     TreatmentProfile exampleProfiles[4] = {};
     treatmentProfileArray = exampleProfiles;
