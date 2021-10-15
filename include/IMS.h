@@ -14,6 +14,7 @@
 #include "Profile.h"
 #include "TreatmentProfile.h"
 #include "timer.h"
+#include "Relay.h"
 
 #pragma once
 
@@ -40,12 +41,12 @@ private:
     DigiPot *fineAdjustmentKnob;
     DigiPot *coarseKnob;
 
-    const uint8_t *channelRelayPins;
     TreatmentProfile *treatmentProfileArray;
 
     void SetRelayFromMuscleIndex(uint8_t muscleIndex);
-    void DisableRelay();
     TimerForMethods<IMS> *timer;
+
+    Relay *mainRelay;
 
 public:
     IMS(uint8_t numberOfProfiles);

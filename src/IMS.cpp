@@ -13,6 +13,7 @@
 #include "IMS.h"
 #include "TreatmentProfile.h"
 #include "timer.h"
+#include "Relay.h"
 
 /**
  * @brief Construct a new IMS::IMS object
@@ -22,7 +23,6 @@
 IMS::IMS(uint8_t numberOfProfiles)
 {
     _maxNumberOfTreatmentProfiles = numberOfProfiles;
-    const uint8_t baseRelayPins[16] = {38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
     _currentTreatmentProfileIndex = 0;
     _state = false;
 
@@ -34,13 +34,9 @@ IMS::IMS(uint8_t numberOfProfiles)
     TreatmentProfile exampleProfiles[4] = {};
     treatmentProfileArray = exampleProfiles;
 
-    channelRelayPins = baseRelayPins;
-
-    for (uint8_t i = 0; i < 16; i++)
-    {
-        pinMode(channelRelayPins[i], OUTPUT);   // set pin as output
-        digitalWrite(channelRelayPins[i], LOW); // set initial state OFF for high trigger relay
-    }
+    const uint8_t baseRelayPins[16] = {38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
+    const uint8_t *tempPointer = baseRelayPins;
+    mainRelay = new Relay(tempPointer);
 }
 
 void IMS::StartNextMuscle()
@@ -90,7 +86,7 @@ void IMS::Stop(void)
     amplitudeKnob->reset();
     coarseKnob->reset();
     fineAdjustmentKnob->reset();
-    DisableRelay();
+    mainRelay->SetAllChannelsTo(false);
     timer->stop();
 }
 
@@ -124,31 +120,26 @@ uint8_t IMS::GetNextProfile()
 
 void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
 {
-    DisableRelay();
+    mainRelay->SetAllChannelsTo(false);
     switch (muscleIndex)
     {
     case VastusLateralis:
-        digitalWrite(channelRelayPins[1], HIGH);
+        mainRelay->SetChannelTo(1, true);
         break;
     case VastusMedialis:
-        digitalWrite(channelRelayPins[2], HIGH);
+        mainRelay->SetChannelTo(2, true);
         break;
     case Quadricep:
-        digitalWrite(channelRelayPins[3], HIGH);
+        mainRelay->SetChannelTo(3, true);
         break;
     case Gacilis:
-        digitalWrite(channelRelayPins[4], HIGH);
+        mainRelay->SetChannelTo(4, true);
         break;
     case Calves:
-        digitalWrite(channelRelayPins[5], HIGH);
+        mainRelay->SetChannelTo(5, true);
         break;
-    }
-}
-
-void IMS::DisableRelay()
-{
-    for (int i = 0; i < 16; i++)
-    {
-        digitalWrite(channelRelayPins[i], LOW); // set initial state OFF for high trigger relay
+    default:
+        mainRelay->SetAllChannelsTo(true);
+        break;
     }
 }
