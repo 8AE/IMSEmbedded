@@ -41,6 +41,7 @@ IMS::IMS(uint8_t numberOfProfiles)
 
 void IMS::StartNextMuscle()
 {
+    Serial.println("Timer Callback");
     if (treatmentProfileArray[_currentTreatmentProfileIndex].GetNextProfile() == 0) //this means we looped back and ended
     {
         Stop();

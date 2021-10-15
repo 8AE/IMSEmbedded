@@ -12,18 +12,13 @@
 #include <Arduino.h>
 #include "Profile.h"
 
-Profile::Profile(uint8_t _numberOfChannels, uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time)
+Profile::Profile(uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time)
 {
-    numberOfChannels = _numberOfChannels;
     muscleIndex = _muscleIndex;
     coarseSetting = _coarseSetting;
     fineSetting = _fineSetting;
     amplitudeSetting = _amplitudeSetting;
     time = _time;
-}
-
-Profile::Profile()
-{
 }
 
 void Profile::SetMuscleIndex(uint8_t _muscleIndex)

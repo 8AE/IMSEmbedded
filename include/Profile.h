@@ -17,7 +17,6 @@ using namespace std;
 class Profile
 {
 private:
-    uint8_t numberOfChannels; //Hey ahmad this may end up being a bit map or something
     uint8_t muscleIndex;
     uint8_t coarseSetting;    //0 - 30v
     uint8_t fineSetting;      //1 - 100
@@ -25,8 +24,7 @@ private:
     uint16_t time;            // min 1 - 20
 
 public:
-    Profile(void);
-    Profile(uint8_t _numberOfChannels, uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time);
+    Profile(uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time);
     uint16_t GetTime() { return time; }
     uint8_t GetFineSetting() { return fineSetting; }
     uint8_t GetAmplitudeSetting() { return amplitudeSetting; }
