@@ -25,7 +25,7 @@ TreatmentProfile::TreatmentProfile()
 
 uint8_t TreatmentProfile::GetNextProfile()
 {
-    if (_currentProfileIndex > _maxNumberOfProfiles)
+    if (_currentProfileIndex >= _maxNumberOfProfiles - 1)
     {
         _currentProfileIndex = 0;
     }
