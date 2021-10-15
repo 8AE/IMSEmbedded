@@ -108,7 +108,7 @@ void IMS::SelectProfile(uint8_t index)
  */
 uint8_t IMS::GetNextProfile()
 {
-    if (_currentTreatmentProfileIndex > _maxNumberOfTreatmentProfiles - 1)
+    if (_currentTreatmentProfileIndex >= _maxNumberOfTreatmentProfiles - 1)
     {
         _currentTreatmentProfileIndex = 0;
     }
