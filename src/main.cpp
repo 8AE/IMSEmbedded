@@ -32,8 +32,8 @@ void setup()
 
   timer = new TimerForMethods<IMS>(&ImsDevice, &IMS::StartNextMuscle);
   ImsDevice.SetTimerPointer(timer);
-  startButton.setDebounceTime(1000);
-  profileSelectButton.setDebounceTime(1000);
+  startButton.setDebounceTime(500);
+  profileSelectButton.setDebounceTime(500);
   profileIndex = ImsDevice.GetCurrentProfileIndex();
   profileLeds[profileIndex].TurnOn();
   Serial.println(profileIndex);
@@ -69,5 +69,6 @@ void loop(void)
     profileLeds[profileIndex].TurnOn();
 
     Serial.println(profileIndex);
+    ImsDevice.PrintProfileInformation();
   }
 }

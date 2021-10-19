@@ -31,7 +31,7 @@ IMS::IMS(uint8_t numberOfProfiles)
     fineAdjustmentKnob = new DigiPot(5, 6, 7);
     coarseKnob = new DigiPot(2, 3, 4);
 
-    TreatmentProfile exampleProfiles[4] = {};
+    TreatmentProfile *exampleProfiles = new TreatmentProfile[4];
     treatmentProfileArray = exampleProfiles;
 
     const uint8_t baseRelayPins[16] = {38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
@@ -143,4 +143,18 @@ void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
         mainRelay->SetAllChannelsTo(true);
         break;
     }
+}
+
+void IMS::PrintProfileInformation()
+{
+    Serial.print("\n Muscle Index:");
+    Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetMuscleIndex());
+    Serial.print("\n Coarse Setting:");
+    Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetCoarseSetting());
+    Serial.print("\n Fine Setting:");
+    Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetFineSetting());
+    Serial.print("\n Amplitude Setting:");
+    Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetAmplitudeSetting());
+    Serial.print("\n Time:");
+    Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetTime());
 }

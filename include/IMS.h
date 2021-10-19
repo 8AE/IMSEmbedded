@@ -55,6 +55,7 @@ public:
     void Start();
     void Stop();
     void SelectProfile(uint8_t index);
+    void PrintProfileInformation();
     uint8_t GetNextProfile();
     uint8_t GetCurrentProfileIndex() { return _currentTreatmentProfileIndex; }
     boolean GetState() { return _state; }
