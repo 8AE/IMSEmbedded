@@ -30,9 +30,7 @@ IMS::IMS(uint8_t numberOfProfiles)
     amplitudeKnob = new DigiPot(9, 10, 11);
     fineAdjustmentKnob = new DigiPot(5, 6, 7);
     coarseKnob = new DigiPot(2, 3, 4);
-
-    TreatmentProfile *exampleProfiles = new TreatmentProfile[4];
-    treatmentProfileArray = exampleProfiles;
+    treatmentProfileArray = new TreatmentProfile[4];
 
     const uint8_t baseRelayPins[16] = {38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
     const uint8_t *tempPointer = baseRelayPins;
