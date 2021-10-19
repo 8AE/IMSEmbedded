@@ -145,6 +145,10 @@ void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
 
 void IMS::PrintProfileInformation()
 {
+    Serial.print("\n Current Treatment profile Index:");
+    Serial.print(_currentTreatmentProfileIndex);
+    Serial.print("\n Current Muscle profile Index:");
+    Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfileIndex());
     Serial.print("\n Muscle Index:");
     Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetMuscleIndex());
     Serial.print("\n Coarse Setting:");

@@ -21,7 +21,7 @@ TreatmentProfile::TreatmentProfile()
     //     {4, 5, 9, 4, 7}};
 
     // profileArray = exampleProfiles; //ALSO TEMP THIS IS FROM EEPROM ALSO
-
+    _currentProfileIndex = 0;
     profileArray = new Profile[4]{
         {1, 2, 6, 1, 4},
         {2, 3, 7, 2, 5},
