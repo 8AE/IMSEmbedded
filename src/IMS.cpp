@@ -32,9 +32,13 @@ IMS::IMS(uint8_t numberOfProfiles)
     coarseKnob = new DigiPot(2, 3, 4);
     treatmentProfileArray = new TreatmentProfile[4];
 
-    const uint8_t baseRelayPins[16] = {38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
-    const uint8_t *tempPointer = baseRelayPins;
-    mainRelay = new Relay(tempPointer);
+    ////mainRelay = new Relay({38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39});
+    RelayArray = new uint8_t[16]{38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
+    for (uint8_t i = 0; i < 16; i++)
+    {
+        pinMode(RelayArray[i], OUTPUT); // set pin as output
+        digitalWrite(RelayArray[i], HIGH);
+    }
 }
 
 void IMS::StartNextMuscle()
@@ -85,7 +89,8 @@ void IMS::Stop(void)
     amplitudeKnob->reset();
     coarseKnob->reset();
     fineAdjustmentKnob->reset();
-    mainRelay->SetAllChannelsTo(false);
+    //mainRelay->SetAllChannelsTo(HIGH);
+    ResetRelays();
     timer->stop();
 }
 
@@ -119,26 +124,32 @@ uint8_t IMS::GetNextProfile()
 
 void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
 {
-    mainRelay->SetAllChannelsTo(false);
+    //mainRelay->SetAllChannelsTo(HIGH);
+    ResetRelays();
     switch (muscleIndex)
     {
     case VastusLateralis:
-        mainRelay->SetChannelTo(1, true);
+        //mainRelay->SetChannelTo(1, LOW);
+        digitalWrite(RelayArray[1], LOW);
         break;
     case VastusMedialis:
-        mainRelay->SetChannelTo(2, true);
+        //mainRelay->SetChannelTo(2, LOW);
+        digitalWrite(RelayArray[2], LOW);
         break;
     case Quadricep:
-        mainRelay->SetChannelTo(3, true);
+        //mainRelay->SetChannelTo(3, LOW);
+        digitalWrite(RelayArray[3], LOW);
         break;
     case Gacilis:
-        mainRelay->SetChannelTo(4, true);
+        //mainRelay->SetChannelTo(4, LOW);
+        digitalWrite(RelayArray[4], LOW);
         break;
     case Calves:
-        mainRelay->SetChannelTo(5, true);
+        //mainRelay->SetChannelTo(5, LOW);
+        digitalWrite(RelayArray[5], LOW);
         break;
     default:
-        mainRelay->SetAllChannelsTo(true);
+        //mainRelay->SetAllChannelsTo(LOW);
         break;
     }
 }
@@ -159,4 +170,12 @@ void IMS::PrintProfileInformation()
     Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetAmplitudeSetting());
     Serial.print("\n Time:");
     Serial.print(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetTime());
+}
+
+void IMS::ResetRelays()
+{
+    for (uint8_t i = 0; i < 16; i++)
+    {
+        digitalWrite(RelayArray[i], HIGH);
+    }
 }

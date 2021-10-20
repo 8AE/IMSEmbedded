@@ -18,12 +18,10 @@ class Relay
 {
 private:
     const uint8_t *channelArray;
-    bool isInvertedLogic;
 
 public:
     Relay(const uint8_t *_channelArray);
-    void SetLogicTrigger(bool logic);
-    void SetChannelTo(uint8_t channel, bool state);
-    void SetAllChannelsTo(bool state);
+    void SetChannelTo(uint8_t channel, uint8_t state);
+    void SetAllChannelsTo(uint8_t state);
     void ConfigureAllChannelsTo(uint8_t mode);
 };

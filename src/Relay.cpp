@@ -14,47 +14,29 @@
 Relay::Relay(const uint8_t *_channelList)
 {
     channelArray = _channelList;
-    isInvertedLogic = true;
+
     ConfigureAllChannelsTo(OUTPUT);
-    SetAllChannelsTo(false);
+    SetAllChannelsTo(HIGH);
 }
 
-void Relay::SetAllChannelsTo(bool state)
+void Relay::SetAllChannelsTo(uint8_t state)
 {
-    for (uint8_t i = 0; i < sizeof(channelArray) / sizeof(uint8_t); i++)
+    for (uint8_t i = 0; i < 16; i++)
     {
-        if (isInvertedLogic)
-        {
-            digitalWrite(channelArray[i], !state);
-        }
-        else
-        {
-            digitalWrite(channelArray[i], state);
-        }
+        digitalWrite(channelArray[i], state);
     }
 }
 
 void Relay::ConfigureAllChannelsTo(uint8_t mode)
 {
-    for (uint8_t i = 0; i < sizeof(channelArray) / sizeof(uint8_t); i++)
+    for (uint8_t i = 0; i < 16; i++)
     {
         pinMode(channelArray[i], OUTPUT); // set pin as output
     }
 }
 
-void Relay::SetLogicTrigger(bool trigger)
+void Relay::SetChannelTo(uint8_t channel, uint8_t state)
 {
-    isInvertedLogic = trigger;
-}
-
-void Relay::SetChannelTo(uint8_t channel, bool state)
-{
-    if (isInvertedLogic)
-    {
-        digitalWrite(channelArray[channel], !state);
-    }
-    else
-    {
-        digitalWrite(channelArray[channel], state);
-    }
+    Serial.println(channelArray[channel]);
+    digitalWrite(channelArray[channel], state);
 }

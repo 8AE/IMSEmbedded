@@ -47,6 +47,8 @@ private:
     TimerForMethods<IMS> *timer;
 
     Relay *mainRelay;
+    const uint8_t *RelayArray = NULL;
+    void ResetRelays();
 
 public:
     IMS(uint8_t numberOfProfiles);
