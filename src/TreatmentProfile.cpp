@@ -23,10 +23,10 @@ TreatmentProfile::TreatmentProfile()
     // profileArray = exampleProfiles; //ALSO TEMP THIS IS FROM EEPROM ALSO
     _currentProfileIndex = 0;
     profileArray = new Profile[4]{
-        {1, 2, 6, 1, 4},
-        {2, 3, 7, 2, 5},
-        {3, 4, 8, 3, 6},
-        {4, 5, 9, 4, 7}};
+        {1, 50, 50, 50, 4},
+        {2, 50, 50, 50, 5},
+        {3, 50, 50, 50, 6},
+        {4, 50, 50, 50, 7}};
 }
 
 uint8_t TreatmentProfile::GetNextProfile()
