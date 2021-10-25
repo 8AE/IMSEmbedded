@@ -130,23 +130,28 @@ void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
     {
     case VastusLateralis:
         //mainRelay->SetChannelTo(1, LOW);
-        digitalWrite(RelayArray[1], LOW);
+        digitalWrite(RelayArray[0], LOW);
+        digitalWrite(RelayArray[15], LOW);
         break;
     case VastusMedialis:
         //mainRelay->SetChannelTo(2, LOW);
-        digitalWrite(RelayArray[2], LOW);
+        digitalWrite(RelayArray[0], LOW);
+        digitalWrite(RelayArray[15], LOW);
         break;
     case Quadricep:
         //mainRelay->SetChannelTo(3, LOW);
-        digitalWrite(RelayArray[3], LOW);
+        digitalWrite(RelayArray[0], LOW);
+        digitalWrite(RelayArray[15], LOW);
         break;
     case Gacilis:
         //mainRelay->SetChannelTo(4, LOW);
-        digitalWrite(RelayArray[4], LOW);
+        digitalWrite(RelayArray[0], LOW);
+        digitalWrite(RelayArray[15], LOW);
         break;
     case Calves:
         //mainRelay->SetChannelTo(5, LOW);
-        digitalWrite(RelayArray[5], LOW);
+        digitalWrite(RelayArray[0], LOW);
+        digitalWrite(RelayArray[15], LOW);
         break;
     default:
         //mainRelay->SetAllChannelsTo(LOW);
