@@ -28,8 +28,8 @@ IMS::IMS(uint8_t numberOfProfiles)
 
     // incPin,  udPin,  csPin
     amplitudeKnob = new DigiPot(9, 10, 11);
-    fineAdjustmentKnob = new DigiPot(5, 6, 7);
-    coarseKnob = new DigiPot(2, 3, 4);
+    fineAdjustmentKnob = new DigiPot(6, 7, 8);
+    coarseKnob = new DigiPot(3, 4, 5);
     treatmentProfileArray = new TreatmentProfile[4];
 
     ////mainRelay = new Relay({38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39});
@@ -71,6 +71,13 @@ void IMS::Start(void)
     amplitudeKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetAmplitudeSetting());
     coarseKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetCoarseSetting());
     fineAdjustmentKnob->set(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetFineSetting());
+
+    Serial.print("\n Amplitude:");
+    Serial.print(amplitudeKnob->get());
+    Serial.print("\n Coarase:");
+    Serial.print(coarseKnob->get());
+    Serial.print("\n Fine:");
+    Serial.print(fineAdjustmentKnob->get());
 
     SetRelayFromMuscleIndex(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetMuscleIndex());
     timer->setTimeout(treatmentProfileArray[_currentTreatmentProfileIndex].GetCurrentProfile().GetTime() * 1000);
