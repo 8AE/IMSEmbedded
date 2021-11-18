@@ -71,4 +71,21 @@ void loop(void)
     Serial.println(profileIndex);
     ImsDevice.PrintProfileInformation();
   }
+
+  if (Serial.available())
+  {
+    char fullsize = Serial.read();
+    char *mobileData = new char[fullsize];
+    if (Serial.available() >= fullsize)
+    {
+      for (size_t i = 0; i < fullsize; i++)
+      {
+        mobileData[i] = Serial.read(); //get all the data
+      }
+    }
+    for (size_t i = 0; i < mobileData[0]; i++) //this should be the number of treatment profiles I hope
+    {
+      /*code */
+    }
+  }
 }
