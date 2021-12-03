@@ -28,6 +28,7 @@ TimerForMethods<IMS> *timer;
 
 static bool firstRead = true;
 static uint8_t index = 0;
+static uint8_t arrayIndex = 0;
 uint8_t *mobileData;
 static uint8_t fullSize = 0;
 
@@ -94,20 +95,25 @@ void loop(void)
 
   if (index >= fullSize && !firstRead)
   {
-    // Serial.println(mobileData[0]);
-    // Serial.println(mobileData[1]);
+    Serial.println(mobileData[0]);
+    Serial.println(mobileData[1]);
+
     index = 0;
+    arrayIndex = 0;
 
     for (uint8_t i = 0; i < mobileData[0]; i++) //this should be the number of treatment profiles I hope
     {
-      ImsDevice.treatmentProfileArray[i].profileArray = new Profile[mobileData[1]];
-      for (uint8_t j = 0; j < mobileData[1]; j++) //number of muscle profiles
+      arrayIndex++;
+      uint8_t temp = mobileData[arrayIndex];
+      ImsDevice.treatmentProfileArray[i].profileArray = new Profile[temp];
+      for (uint8_t j = 0; j < temp; j++) //number of muscle profiles
       {
-        ImsDevice.treatmentProfileArray[i].profileArray[j].SetMuscleIndex(mobileData[2 + j]);
-        ImsDevice.treatmentProfileArray[i].profileArray[j].SetCoarseSetting(mobileData[3 + j]);
-        ImsDevice.treatmentProfileArray[i].profileArray[j].SetFineSetting(mobileData[4 + j]);
-        ImsDevice.treatmentProfileArray[i].profileArray[j].SetAmplitudeSetting(mobileData[5 + j]);
-        ImsDevice.treatmentProfileArray[i].profileArray[j].SetTime(mobileData[6 + j]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetMuscleIndex(mobileData[++arrayIndex]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetCoarseSetting(mobileData[++arrayIndex]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetFineSetting(mobileData[++arrayIndex]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetAmplitudeSetting(mobileData[++arrayIndex]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetTime(mobileData[++arrayIndex]);
+        //arrayIndex += 5;
 
         Serial.println("Muscle:");
         Serial.println(ImsDevice.treatmentProfileArray[i].profileArray[j].GetMuscleIndex());
@@ -122,5 +128,6 @@ void loop(void)
       }
     }
     firstRead = true;
+    arrayIndex = 0;
   }
 }
