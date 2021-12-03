@@ -12,7 +12,11 @@
 #include <Arduino.h>
 #include "Profile.h"
 
-Profile::Profile(uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time)
+Profile::Profile()
+{
+}
+
+Profile::Profile(uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint8_t _time)
 {
     muscleIndex = _muscleIndex;
     coarseSetting = _coarseSetting;
@@ -37,7 +41,7 @@ void Profile::SetAmplitudeSetting(uint8_t _amplitudeSetting)
 {
     amplitudeSetting = _amplitudeSetting;
 }
-void Profile::SetTime(uint16_t _time)
+void Profile::SetTime(uint8_t _time)
 {
     time = _time;
 }

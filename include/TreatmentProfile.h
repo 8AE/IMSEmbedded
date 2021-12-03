@@ -20,7 +20,6 @@ class TreatmentProfile
 private:
     uint8_t _currentProfileIndex;
     uint8_t _maxNumberOfProfiles;
-    Profile *profileArray;
 
 public:
     TreatmentProfile(void);
@@ -28,5 +27,6 @@ public:
     Profile GetCurrentProfile();
     Profile GetProfile(uint8_t index);
     uint8_t GetCurrentProfileIndex() { return _currentProfileIndex; }
+    Profile *profileArray;
     void SetCurrentProfileIndex(uint8_t index);
 };

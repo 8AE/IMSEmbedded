@@ -41,8 +41,6 @@ private:
     DigiPot *fineAdjustmentKnob;
     DigiPot *coarseKnob;
 
-    TreatmentProfile *treatmentProfileArray;
-
     void SetRelayFromMuscleIndex(uint8_t muscleIndex);
     TimerForMethods<IMS> *timer;
 
@@ -51,6 +49,7 @@ private:
     void ResetRelays();
 
 public:
+    TreatmentProfile *treatmentProfileArray;
     IMS(uint8_t numberOfProfiles);
     void StartNextMuscle();
     void SetTimerPointer(TimerForMethods<IMS> *timerPointer);

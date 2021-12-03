@@ -13,14 +13,7 @@
 
 TreatmentProfile::TreatmentProfile()
 {
-    _maxNumberOfProfiles = 4; //TEMP MUST CHANGE FOR EEPROM
-    // Profile exampleProfiles[] = {
-    //     {1, 2, 6, 1, 4},
-    //     {2, 3, 7, 2, 5},
-    //     {3, 4, 8, 3, 6},
-    //     {4, 5, 9, 4, 7}};
-
-    // profileArray = exampleProfiles; //ALSO TEMP THIS IS FROM EEPROM ALSO
+    _maxNumberOfProfiles = 4;
     _currentProfileIndex = 0;
     profileArray = new Profile[5]{
         {1, 50, 50, 20, 5},

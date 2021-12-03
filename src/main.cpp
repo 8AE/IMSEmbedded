@@ -26,6 +26,11 @@ Led profileLeds[] = {31, 33, 35, 37};
 IMS ImsDevice(4);
 TimerForMethods<IMS> *timer;
 
+static bool firstRead = true;
+static uint8_t index = 0;
+uint8_t *mobileData;
+static uint8_t fullSize = 0;
+
 void setup()
 {
   Serial.begin(9600); //DEBUG
@@ -72,20 +77,50 @@ void loop(void)
     ImsDevice.PrintProfileInformation();
   }
 
-  if (Serial.available())
+  // Serial implementation starts here
+  while (Serial.available() > 0 && firstRead)
   {
-    char fullsize = Serial.read();
-    char *mobileData = new char[fullsize];
-    if (Serial.available() >= fullsize)
+    fullSize = Serial.read();
+    firstRead = false;
+    mobileData = new uint8_t[fullSize];
+  }
+
+  while (Serial.available() > 0 && !firstRead)
+  {
+    mobileData[index] = Serial.read();
+    //Serial.print(mobileData[index]);
+    index++;
+  }
+
+  if (index >= fullSize && !firstRead)
+  {
+    // Serial.println(mobileData[0]);
+    // Serial.println(mobileData[1]);
+    index = 0;
+
+    for (uint8_t i = 0; i < mobileData[0]; i++) //this should be the number of treatment profiles I hope
     {
-      for (size_t i = 0; i < fullsize; i++)
+      ImsDevice.treatmentProfileArray[i].profileArray = new Profile[mobileData[1]];
+      for (uint8_t j = 0; j < mobileData[1]; j++) //number of muscle profiles
       {
-        mobileData[i] = Serial.read(); //get all the data
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetMuscleIndex(mobileData[2 + j]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetCoarseSetting(mobileData[3 + j]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetFineSetting(mobileData[4 + j]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetAmplitudeSetting(mobileData[5 + j]);
+        ImsDevice.treatmentProfileArray[i].profileArray[j].SetTime(mobileData[6 + j]);
+
+        Serial.println("Muscle:");
+        Serial.println(ImsDevice.treatmentProfileArray[i].profileArray[j].GetMuscleIndex());
+        Serial.println("Coarse:");
+        Serial.println(ImsDevice.treatmentProfileArray[i].profileArray[j].GetCoarseSetting());
+        Serial.println("Fine:");
+        Serial.println(ImsDevice.treatmentProfileArray[i].profileArray[j].GetFineSetting());
+        Serial.println("Amplitude:");
+        Serial.println(ImsDevice.treatmentProfileArray[i].profileArray[j].GetAmplitudeSetting());
+        Serial.println("Time:");
+        Serial.println(ImsDevice.treatmentProfileArray[i].profileArray[j].GetTime());
       }
     }
-    for (size_t i = 0; i < mobileData[0]; i++) //this should be the number of treatment profiles I hope
-    {
-      /*code */
-    }
+    firstRead = true;
   }
 }

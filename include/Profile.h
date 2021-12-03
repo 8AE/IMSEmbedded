@@ -21,11 +21,12 @@ private:
     uint8_t coarseSetting;    //0 - 30v
     uint8_t fineSetting;      //1 - 100
     uint8_t amplitudeSetting; //1 - 100
-    uint16_t time;            // min 1 - 20
+    uint8_t time;             // min 1 - 20
 
 public:
-    Profile(uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint16_t _time);
-    uint16_t GetTime() { return time; }
+    Profile();
+    Profile(uint8_t _muscleIndex, uint8_t _coarseSetting, uint8_t _fineSetting, uint8_t _amplitudeSetting, uint8_t _time);
+    uint8_t GetTime() { return time; }
     uint8_t GetFineSetting() { return fineSetting; }
     uint8_t GetAmplitudeSetting() { return amplitudeSetting; }
     uint8_t GetCoarseSetting() { return coarseSetting; }
@@ -35,5 +36,5 @@ public:
     void SetCoarseSetting(uint8_t _coarseSetting);
     void SetFineSetting(uint8_t _fineSetting);
     void SetAmplitudeSetting(uint8_t _amplitudeSetting);
-    void SetTime(uint16_t _time);
+    void SetTime(uint8_t _time);
 };
