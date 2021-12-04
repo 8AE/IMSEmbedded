@@ -138,20 +138,28 @@ void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
         digitalWrite(RelayArray[15], LOW);
         break;
     case VastusMedialis:
-        digitalWrite(RelayArray[0], LOW);
-        digitalWrite(RelayArray[15], LOW);
+        digitalWrite(RelayArray[1], LOW);
+        digitalWrite(RelayArray[14], LOW);
         break;
     case Quadricep:
-        digitalWrite(RelayArray[0], LOW);
-        digitalWrite(RelayArray[15], LOW);
+        digitalWrite(RelayArray[2], LOW);
+        digitalWrite(RelayArray[13], LOW);
         break;
     case Gacilis:
-        digitalWrite(RelayArray[0], LOW);
-        digitalWrite(RelayArray[15], LOW);
+        digitalWrite(RelayArray[3], LOW);
+        digitalWrite(RelayArray[12], LOW);
+        break;
+    case Hamstring:
+        digitalWrite(RelayArray[4], LOW);
+        digitalWrite(RelayArray[11], LOW);
+        digitalWrite(RelayArray[5], LOW);
+        digitalWrite(RelayArray[10], LOW);
         break;
     case Calves:
-        digitalWrite(RelayArray[0], LOW);
-        digitalWrite(RelayArray[15], LOW);
+        digitalWrite(RelayArray[6], LOW);
+        digitalWrite(RelayArray[9], LOW);
+        digitalWrite(RelayArray[7], LOW);
+        digitalWrite(RelayArray[8], LOW);
         break;
     default:
         break;
