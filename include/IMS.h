@@ -44,7 +44,6 @@ private:
     void SetRelayFromMuscleIndex(uint8_t muscleIndex);
     TimerForMethods<IMS> *timer;
 
-    Relay *mainRelay;
     const uint8_t *RelayArray = NULL;
     void ResetRelays();
 

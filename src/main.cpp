@@ -11,7 +11,6 @@
 
 #include <Arduino.h>
 #include <ezButton.h>
-//#include <EEPROM.h>
 #include "IMS.h"
 #include "Led.h"
 #include "timer.h"

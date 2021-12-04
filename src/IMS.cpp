@@ -32,7 +32,6 @@ IMS::IMS(uint8_t numberOfProfiles)
     coarseKnob = new DigiPot(3, 4, 5);
     treatmentProfileArray = new TreatmentProfile[4];
 
-    ////mainRelay = new Relay({38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39});
     RelayArray = new uint8_t[16]{38, 40, 42, 44, 46, 48, 50, 52, 53, 51, 49, 47, 45, 43, 41, 39};
     for (uint8_t i = 0; i < 16; i++)
     {
@@ -90,13 +89,13 @@ void IMS::Start(void)
  */
 void IMS::Stop(void)
 {
-    Serial.println("IMS Stop"); //DEBUG
+    Serial.println("IMS Stop");
     _state = false;
 
     amplitudeKnob->reset();
     coarseKnob->reset();
     fineAdjustmentKnob->reset();
-    //mainRelay->SetAllChannelsTo(HIGH);
+    _currentTreatmentProfileIndex = 0;
     ResetRelays();
     timer->stop();
 }
@@ -131,37 +130,30 @@ uint8_t IMS::GetNextProfile()
 
 void IMS::SetRelayFromMuscleIndex(uint8_t muscleIndex)
 {
-    //mainRelay->SetAllChannelsTo(HIGH);
     ResetRelays();
     switch (muscleIndex)
     {
     case VastusLateralis:
-        //mainRelay->SetChannelTo(1, LOW);
         digitalWrite(RelayArray[0], LOW);
         digitalWrite(RelayArray[15], LOW);
         break;
     case VastusMedialis:
-        //mainRelay->SetChannelTo(2, LOW);
         digitalWrite(RelayArray[0], LOW);
         digitalWrite(RelayArray[15], LOW);
         break;
     case Quadricep:
-        //mainRelay->SetChannelTo(3, LOW);
         digitalWrite(RelayArray[0], LOW);
         digitalWrite(RelayArray[15], LOW);
         break;
     case Gacilis:
-        //mainRelay->SetChannelTo(4, LOW);
         digitalWrite(RelayArray[0], LOW);
         digitalWrite(RelayArray[15], LOW);
         break;
     case Calves:
-        //mainRelay->SetChannelTo(5, LOW);
         digitalWrite(RelayArray[0], LOW);
         digitalWrite(RelayArray[15], LOW);
         break;
     default:
-        //mainRelay->SetAllChannelsTo(LOW);
         break;
     }
 }
